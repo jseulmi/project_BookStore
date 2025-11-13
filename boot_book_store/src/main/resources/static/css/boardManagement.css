@@ -20,17 +20,6 @@
       line-height: 1.5;
     }
 
-    /* 게시판 메인 */
-    .board-section {
-      padding: 60px 0;
-      background: var(--section-bg);
-      min-height: calc(100vh - 200px);
-    }
-    .board-container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
     .board-header {
       display: flex;
       justify-content: space-between;
