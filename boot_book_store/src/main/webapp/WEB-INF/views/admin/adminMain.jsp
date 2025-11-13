@@ -23,7 +23,9 @@
         <div class="nav-section">
           <div class="nav-section-title">회원관리</div>
           <ul class="nav-list">
-            <li class="nav-item"><button>회원관리</button></li>
+            <li class="nav-item">
+				<button data-page="/admin/member/adminlist">회원관리</button>
+			</li>
             <li class="nav-item"><button>권한관리</button></li>
           </ul>
         </div>
@@ -32,9 +34,15 @@
         <div class="nav-section">
           <div class="nav-section-title">게시판관리</div>
           <ul class="nav-list">
-            <li class="nav-item"><button>게시글 관리</button></li>
-            <li class="nav-item"><button>공지사항</button></li>
-            <li class="nav-item"><button>QnA</button></li>
+            <li class="nav-item">
+				<button data-page="/admin/boardManagement">게시글 관리</button>	
+			</li>
+            <li class="nav-item">
+				<button data-page="/admin/noticeManagement">공지사항 관리</button>
+			</li>
+            <li class="nav-item">
+				<button data-page="/admin/qnaManagement">QnA 관리</button>
+			</li>
           </ul>
         </div>
 
@@ -88,7 +96,7 @@
       </header>
 
       <!-- CONTENT -->
-      <section class="content">
+      <section class="content" id="content-area">
 
         <h1 style="font-size:18px;margin:0 0 6px 0;">관리자 대시보드</h1>
         <div style="color:var(--muted);font-size:13px;margin-bottom:18px;">기본 화면 구성 예시</div>
@@ -96,5 +104,29 @@
       </section>
     </main>
   </div>
+  <script>
+    // 공통 페이지 로더
+    function loadPage(url) {
+      fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById("content-area").innerHTML = html;
+        })
+        .catch(err => {
+          document.getElementById("content-area").innerHTML =
+            "<div style='padding:20px;color:red'>페이지 로딩 실패</div>";
+        });
+    }
+
+    // 메뉴 클릭 이벤트 연결
+    document.querySelectorAll('.nav-item button').forEach(btn => {
+      btn.addEventListener("click", () => {
+        const page = btn.dataset.page;   // 버튼에 data-page 속성 넣을 거임
+        if(page){
+          loadPage(page);
+        }
+      });
+    });
+  </script>
 </body>
 </html>
