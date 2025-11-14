@@ -341,56 +341,79 @@
 	  return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
 	}
 
-	document.getElementById('writeForm').addEventListener('submit', function(e) {
-	  const title = document.getElementById('title').value.trim();
-	  const content = document.getElementById('content').value.trim();
+<!--	document.getElementById('writeForm').addEventListener('submit', function(e) {-->
+<!--	  const title = document.getElementById('title').value.trim();-->
+<!--	  const content = document.getElementById('content').value.trim();-->
 
-	  if (!title) {
-	    e.preventDefault();
-	    alert('제목을 입력해주세요.');
-	    document.getElementById('title').focus();
-	    return false;
-	  }
+<!--	  if (!title) {-->
+<!--	    e.preventDefault();-->
+<!--	    alert('제목을 입력해주세요.');-->
+<!--	    document.getElementById('title').focus();-->
+<!--	    return false;-->
+<!--	  }-->
 
-	  if (!content) {
-	    e.preventDefault();
-	    alert('내용을 입력해주세요.');
-	    document.getElementById('content').focus();
-	    return false;
-	  }
-	});
-	document.getElementById("writeForm").addEventListener("submit", function(e) {
-     e.preventDefault(); // 기본 submit 막기
+<!--	  if (!content) {-->
+<!--	    e.preventDefault();-->
+<!--	    alert('내용을 입력해주세요.');-->
+<!--	    document.getElementById('content').focus();-->
+<!--	    return false;-->
+<!--	  }-->
+<!--	});-->
+<!--	document.getElementById("writeForm").addEventListener("submit", function(e) {-->
+<!--     e.preventDefault(); // 기본 submit 막기-->
 
-     const form = document.getElementById("writeForm");
-     const formData = new FormData(form); // 파일 포함 FormData 생성
+<!--     const form = document.getElementById("writeForm");-->
+<!--     const formData = new FormData(form); // 파일 포함 FormData 생성-->
 
-     fetch(form.action, {
-         method: "POST",
-         body: formData
-     })
-     .then(res => res.text())
-     .then(html => {
-         // 수정 성공 후 목록 페이지 비동기 로딩
-         loadPage("/admin/noticeManagement");
-     })
-     .catch(err => {
-         alert("수정 중 오류 발생!");
-     });
- });
+<!--     fetch(form.action, {-->
+<!--         method: "POST",-->
+<!--         body: formData-->
+<!--     })-->
+<!--     .then(res => res.text())-->
+<!--     .then(html => {-->
+<!--         // 수정 성공 후 목록 페이지 비동기 로딩-->
+<!--         loadPage("/admin/noticeManagement");-->
+<!--     })-->
+<!--     .catch(err => {-->
+<!--         alert("수정 중 오류 발생!");-->
+<!--     });-->
+<!-- });-->
  function initNoticeWrite() {
    const form = document.getElementById("writeForm");
    if (!form) return;
+
+   // 중복 바인딩 방지
    if (form.dataset.bound === "1") return;
    form.dataset.bound = "1";
 
    form.addEventListener("submit", function(e) {
      e.preventDefault();
+
+     // 제목/내용 유효성 검사
+     const title = document.getElementById('title').value.trim();
+     const content = document.getElementById('content').value.trim();
+
+     if (!title) {
+       alert("제목을 입력해주세요.");
+       document.getElementById('title').focus();
+       return;
+     }
+
+     if (!content) {
+       alert("내용을 입력해주세요.");
+       document.getElementById('content').focus();
+       return;
+     }
+
+     // 실제 등록 실행
      const formData = new FormData(form);
 
-     fetch(form.action, { method: "POST", body: formData })
-       .then(() => loadPage("/admin/noticeManagement"))
-       .catch(() => alert("등록 실패"));
+     fetch(form.action, {
+       method: "POST",
+       body: formData
+     })
+     .then(() => loadPage("/admin/noticeManagement"))
+     .catch(() => alert("등록 실패"));
    });
  }
 
