@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!doctype html>
 <html lang="ko">
 <head>
@@ -14,7 +16,7 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
 	rel="stylesheet">
-
+	
 <!-- 외부 CSS -->
 <link rel="stylesheet"
 	href="/css/SearchDetail.css">
@@ -59,12 +61,12 @@
 	<main class="page-wrap">
 
 		<!-- 상단 그라디언트 헤더 -->
-<section class="detailhead">
-  <div class="detailsubwrap">
-    <h1 class="title">도서 상세정보</h1>
-    <p class="meta subnote">책갈피가 엄선한 도서 정보를 한눈에 확인하세요.</p>
-  </div>
-</section>
+		<section class="detailhead">
+		  <div class="detailsubwrap">
+		    <h1 class="title">도서 상세정보</h1>
+		    <p class="meta subnote">책갈피가 엄선한 도서 정보를 한눈에 확인하세요.</p>
+		  </div>
+		</section>
 		<div class="page-container">
 			<div class="product-detail">
 				<p class="breadcrumb in-card">
@@ -181,7 +183,127 @@
 				</div>
 			</div>
 
+			<!-- 리뷰 작성 카드 -->
+			<div class="book-details-section">
+			    <c:choose>
+			        <c:when test="${not empty sessionScope.loginId && hasPurchased}">
+			            <c:choose>
+			                <c:when test="${hasReviewed}">
+			                    <p>리뷰는 1번만 작성할 수 있습니다.</p>
+			                </c:when>
+			                <c:otherwise>
+								<!-- 리뷰 작성 폼 -->
+								<form action="${pageContext.request.contextPath}/review/write" method="post" id="reviewForm">
+									<input type="hidden" name="book_id" value="${book.book_id}" />
+									<input type="hidden" name="user_id" value="${sessionScope.loginId}" />
+									<input type="hidden" name="review_rating" id="reviewRatingInput" value="" />
+									<label for="review_content" class="review-label">리뷰 적기</label>
+									<div class="review-write-section">
+									<span id="starContainer">
+										<img src="/img/empty_star.png" class="star" data-value="1" alt="1점" width="12" height="12">
+										<img src="/img/empty_star.png" class="star" data-value="2" alt="2점" width="12" height="12">
+										<img src="/img/empty_star.png" class="star" data-value="3" alt="3점" width="12" height="12">
+										<img src="/img/empty_star.png" class="star" data-value="4" alt="4점" width="12" height="12">
+										<img src="/img/empty_star.png" class="star" data-value="5" alt="5점" width="12" height="12">
+									</span>
+										<textarea id="review_content" name="review_content" class="review-textarea" placeholder="리뷰를 작성해주세요." required></textarea>
+										<button type="submit" class="review-submit-btn">리뷰 작성</button>
+									</div>
+								</form>
+			                </c:otherwise>
+			            </c:choose>
+			        </c:when>
+			        <c:when test="${not empty sessionScope.loginId && !hasPurchased}">
+			            <p>리뷰 작성은 해당 책을 구매한 사용자만 가능합니다.</p>
+			        </c:when>
+			        <c:otherwise>
+			            <p>리뷰 작성은 <a href="<c:url value='/login'/>">로그인</a> 후 가능합니다.</p>
+			        </c:otherwise>
+			    </c:choose>
+			</div>
 
+			
+			<script>
+			    document.addEventListener('DOMContentLoaded', function () {
+			        const starImages = document.querySelectorAll('#starContainer .star');
+			        const ratingInput = document.getElementById('reviewRatingInput');
+			        const filledStar = '/img/star.png';
+			        const emptyStar  = '/img/empty_star.png';
+
+			        let currentRating = 0; // 현재 별점
+
+			        // 별점 클릭 이벤트 처리
+			        starImages.forEach(star => {
+			            const value = Number(star.dataset.value);
+
+			            star.addEventListener('click', () => {
+			                if (currentRating === value) {
+			                    // 같은 별 클릭 시 점수 감소 (최소 0)
+			                    currentRating = Math.max(0, currentRating - 1);
+			                } else {
+			                    currentRating = value;
+			                }
+			                ratingInput.value = currentRating;
+			                updateStars(currentRating);
+			            });
+			        });
+
+			        // 별점 상태 업데이트
+			        function updateStars(rating) {
+			            starImages.forEach(star => {
+			                star.src = star.dataset.value <= rating ? filledStar : emptyStar;
+			            });
+			        }
+
+			        // 리뷰 작성 제한 처리
+			        const hasReviewed = ${hasReviewed};  // 서버에서 전달받은 변수값
+			        const reviewForm = document.getElementById('reviewForm');
+			        const reviewMessage = document.getElementById('reviewMessage');
+
+			        if (hasReviewed) {
+			            if (reviewForm) {
+			                reviewForm.style.display = 'none';  // 리뷰 폼 숨기기
+			            }
+			            if (reviewMessage) {
+			                reviewMessage.style.display = 'block';  // 제한 메시지 보이기
+			            }
+			        } else {
+			            if (reviewForm) {
+			                reviewForm.style.display = 'block';  // 리뷰 폼 보이기
+			            }
+			            if (reviewMessage) {
+			                reviewMessage.style.display = 'none';  // 제한 메시지 숨기기
+			            }
+			        }
+			    });
+			</script>
+
+			<!-- 리뷰 목록 -->
+			<div class="review-list-section">
+			    <h3>리뷰 목록</h3>
+			    <c:if test="${not empty reviews}">
+			        <c:forEach var="r" items="${reviews}">
+			            <div class="review-item">
+			                <div class="review-header">
+			                    <span class="review-stars">
+			                        <c:forEach var="i" begin="1" end="5">
+			                            <img src="<c:out value='${i <= r.review_rating ? "/img/star.png" : "/img/empty_star.png"}' />" alt="별점" width="14" height="14">
+			                        </c:forEach>
+			                    </span>
+			                </div>
+			                <p class="review-content">${r.review_content}</p>
+			                <div class="review-footer">
+			                    <small class="review-nickname">${r.user_nickname}</small>
+			                    <small><fmt:formatDate value="${r.review_date}" pattern="yyyy-MM-dd HH:mm"/></small>
+			                </div>
+			            </div>
+			            <hr/>
+			        </c:forEach>
+			    </c:if>
+			    <c:if test="${empty reviews}">
+			        <p>아직 작성된 리뷰가 없습니다.</p>
+			    </c:if>
+			</div>
 		</div>
 	</main>
 
