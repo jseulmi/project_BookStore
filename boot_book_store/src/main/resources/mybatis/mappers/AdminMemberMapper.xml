@@ -5,63 +5,73 @@
 
 <mapper namespace="com.boot.mapper.AdminMemberMapper">
 
-    <!-- 🔥 컬럼명 → 키 소문자로 매핑하는 resultMap -->
-    <resultMap id="userMap" type="hashmap">
-        <result column="USER_ID" property="user_id"/>
-        <result column="USER_NAME" property="user_name"/>
-        <result column="USER_NICKNAME" property="user_nickname"/>
-        <result column="USER_EMAIL" property="user_email"/>
-        <result column="USER_PHONE_NUM" property="user_phone_num"/>
-        <result column="LOGIN_TYPE" property="login_type"/>
-        <result column="USER_ROLE" property="user_role"/>
-        <result column="REG_DATE" property="reg_date"/>
-    </resultMap>
-
-    <select id="selectAllUsers" resultMap="userMap">
-    SELECT
-        USER_ID,
-        USER_NAME,
-        USER_NICKNAME,
-        USER_EMAIL,
-        USER_PHONE_NUM,
-        LOGIN_TYPE,
-        USER_ROLE,
-        TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI:SS') AS REG_DATE
-    FROM users
-    WHERE user_role &lt;&gt; 'ADMIN'
-    ORDER BY REG_DATE DESC
-</select>
-
-    <select id="selectUserById" resultMap="userMap">
+    <!-- ✅ 전체 회원 조회 (ADMIN 제외) -->
+    <select id="selectAllUsers" resultType="map">
         SELECT
-            USER_ID,
-            USER_NAME,
-            USER_NICKNAME,
-            USER_EMAIL,
-            USER_PHONE_NUM,
-            USER_POST_NUM,
-            USER_ADDRESS,
-            USER_DETAIL_ADDRESS,
-            LOGIN_TYPE,
-            USER_ROLE,
-            TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI:SS') AS REG_DATE
+            user_id             AS USER_ID,
+            user_name           AS USER_NAME,
+            user_nickname       AS USER_NICKNAME,
+            user_email          AS USER_EMAIL,
+            user_phone_num      AS USER_PHONE_NUM,
+            login_type          AS LOGIN_TYPE,
+            TO_CHAR(reg_date, 'YYYY-MM-DD HH24:MI:SS') AS REG_DATE,
+            user_role           AS USER_ROLE
         FROM users
-        WHERE USER_ID = #{user_id}
+        WHERE user_role &lt;&gt; 'ADMIN'
+        ORDER BY reg_date DESC
     </select>
 
-    <update id="updateUser">
+    <!-- ✅ 단일 회원 조회 -->
+    <select id="selectUserById" parameterType="string" resultType="map">
+        SELECT
+            user_id             AS USER_ID,
+            user_name           AS USER_NAME,
+            user_nickname       AS USER_NICKNAME,
+            user_email          AS USER_EMAIL,
+            user_phone_num      AS USER_PHONE_NUM,
+            user_post_num       AS USER_POST_NUM,
+            user_address        AS USER_ADDRESS,
+            user_detail_address AS USER_DETAIL_ADDRESS,
+            login_type          AS LOGIN_TYPE,
+            TO_CHAR(reg_date, 'YYYY-MM-DD HH24:MI:SS') AS REG_DATE,
+            user_role           AS USER_ROLE
+        FROM users
+        WHERE user_id = #{user_id}
+    </select>
+
+    <!-- ✅ 회원 정보 수정 (아이디, 이름, 권한, 로그인타입은 수정 안 함) -->
+    <update id="updateUser" parameterType="map">
         UPDATE users
-        SET user_email = #{user_email},
-            user_phone_num = #{user_phone_num},
-            user_nickname = #{user_nickname},
-            user_address = #{user_address},
+        SET user_email          = #{user_email},
+            user_phone_num      = #{user_phone_num},
+            user_nickname       = #{user_nickname},
+            user_address        = #{user_address},
             user_detail_address = #{user_detail_address}
         WHERE user_id = #{user_id}
     </update>
 
-    <delete id="deleteUser">
-        DELETE FROM users
-        WHERE user_id = #{user_id}
+    <!-- ✅ 회원 삭제 -->
+    <delete id="deleteUser" parameterType="string">
+        DELETE FROM users WHERE user_id = #{user_id}
     </delete>
+    
+    <!-- 권한 -->
+    <update id="updateRole" parameterType="map">
+    UPDATE users
+    SET user_role = #{user_role}
+    WHERE user_id = #{user_id}
+</update>
+
+<select id="selectAdmins" resultType="map">
+    SELECT
+        user_id AS USER_ID,
+        user_name AS USER_NAME,
+        user_email AS USER_EMAIL,
+        user_role AS USER_ROLE
+    FROM users
+    WHERE user_role = 'ADMIN'
+    ORDER BY user_id
+</select>
+
 
 </mapper>
