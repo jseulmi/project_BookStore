@@ -57,10 +57,8 @@
 					        <div class="admin-menu">
 					            <!-- 모든 사용자에게 보임 -->
 					            <a href="<c:url value='/inquiry'/>">1:1 문의</a>
-					            <a href="<c:url value='/adminMain'/>">관리자 모드</a>
-
-					            <!-- 🔥 관리자에게만 보임 -->
-					            <c:if test="${sessionScope.userRole eq 'ADMIN'}">
+					            <c:if test="${sessionScope.userRole == 'ADMIN'}">
+								    <li><a href="/adminMain">관리자 모드</a></li>
 					            </c:if>
 					        </div>
 					    </div>
