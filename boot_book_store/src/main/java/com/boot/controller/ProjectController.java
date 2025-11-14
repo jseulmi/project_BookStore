@@ -485,10 +485,10 @@ public class ProjectController {
 	    return "admin/boardManagement"; // list.jsp
 	}
 //	관리자 화면에서 게시판을 불러옴
-	@GetMapping("/admin/noticeManagement")
-	public String noticeManagement() {
-		return "admin/noticeManagement"; // list.jsp
-	}
+//	@GetMapping("/admin/noticeManagement")
+//	public String noticeManagement() {
+//		return "admin/noticeManagement"; // list.jsp
+//	}
 //	관리자 화면에서 게시판을 불러옴
 	@GetMapping("/admin/qnaManagement")
 	public String qnaManagement() {
