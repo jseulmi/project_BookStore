@@ -12,4 +12,9 @@ public interface AdminMemberMapper {
     Map<String, Object> selectUserById(@Param("user_id") String userId);
     int updateUser(Map<String, Object> param);
     int deleteUser(@Param("user_id") String userId);
+    int updateRole(Map<String, Object> param);
+    List<Map<String, Object>> selectAdmins();
+
+
 }
+
