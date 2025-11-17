@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boot.dao.BookBuyDAO">
+
+    <insert id="insertBookBuy" parameterType="com.boot.dto.BookBuyDTO" useGeneratedKeys="false">
+	    <selectKey keyProperty="buy_id" resultType="int" order="BEFORE">
+	        SELECT bookbuy_seq.NEXTVAL FROM dual
+	    </selectKey>
+	    INSERT INTO BookBuy (buy_id, book_id, user_id, quantity, purchase_date)
+	    VALUES (#{buy_id}, #{book_id}, #{user_id}, #{quantity}, #{purchase_date})
+	</insert>
+
+	<select id="selectPurchaseListByUserId" parameterType="string" resultMap="BookBuyWithBookMap">
+	    SELECT bb.buy_id, bb.book_id, bb.user_id, bb.quantity, bb.purchase_date,
+	           b.book_id as book_id, b.book_title, b.book_writer, b.book_pub, b.book_price
+	    FROM BookBuy bb
+	    JOIN Book b ON bb.book_id = b.book_id
+	    WHERE bb.user_id = #{userId}
+	    ORDER BY bb.purchase_date DESC
+	</select>
+	
+	<resultMap id="BookBuyWithBookMap" type="com.boot.dto.BookBuyDTO">
+	    <id property="buy_id" column="buy_id" />
+	    <result property="book_id" column="book_id" />
+	    <result property="user_id" column="user_id" />
+	    <result property="quantity" column="quantity" />
+	    <result property="purchase_date" column="purchase_date" />
+	    
+	    <association property="book" javaType="com.boot.dto.BookDTO">
+	        <result property="book_id" column="book_id" />
+	        <result property="book_title" column="book_title" />
+	        <result property="book_writer" column="book_writer" />
+	        <result property="book_pub" column="book_pub" />
+	        <result property="book_price" column="book_price" />
+	    </association>
+	</resultMap>
+
+</mapper>
