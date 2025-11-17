@@ -12,4 +12,6 @@ public class OrderHistoryItemDTO {
     private String book_writer;
     private int purchase_price;
     private int quantity;
+    
+    private String book_image_path;
 }
