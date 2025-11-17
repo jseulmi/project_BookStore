@@ -31,6 +31,15 @@
 		DELETE FROM cart WHERE cart_id = #{cart_id}
 	</delete>
 
+	<delete id="deleteCartItemByUserIdAndBookIds" parameterType="map">
+	    DELETE FROM cart
+	    WHERE user_id = #{user_id}
+	    AND book_id IN
+	    <foreach collection="bookIds" item="bookId" open="(" separator="," close=")">
+	        #{bookId}
+	    </foreach>
+	</delete>
+
 	<!-- 사용자 장바구니 + 도서정보 JOIN 조회 -->
 	<select id="selectCartWithBookByUserId" parameterType="string"
 		resultMap="cartBookResultMap">
