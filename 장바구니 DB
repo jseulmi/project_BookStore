@@ -1,0 +1,40 @@
+
+--장바구니
+CREATE TABLE cart (
+    cart_id    NUMBER PRIMARY KEY,
+    user_id    VARCHAR2(20) NOT NULL,
+    book_id    NUMBER NOT NULL,
+    quantity   NUMBER DEFAULT 1,
+    cart_date  DATE DEFAULT SYSDATE,
+
+    CONSTRAINT fk_cart_user
+        FOREIGN KEY (user_id)
+        REFERENCES users(user_id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_cart_book
+        FOREIGN KEY (book_id)
+        REFERENCES book(book_id)
+        ON DELETE CASCADE
+);
+
+--장바구니 시퀀스
+CREATE SEQUENCE cart_seq
+START WITH 1
+INCREMENT BY 1
+NOCACHE
+NOCYCLE;
+
+DECLARE
+  max_id NUMBER;
+  seq_val NUMBER;
+BEGIN
+  SELECT NVL(MAX(cart_id), 0) INTO max_id FROM cart;
+  SELECT cart_seq.NEXTVAL INTO seq_val FROM dual; -- NEXTVAL 먼저 호출
+  IF seq_val < max_id THEN
+    EXECUTE IMMEDIATE 'ALTER SEQUENCE cart_seq INCREMENT BY ' || (max_id - seq_val + 1);
+    SELECT cart_seq.NEXTVAL INTO seq_val FROM dual;
+    EXECUTE IMMEDIATE 'ALTER SEQUENCE cart_seq INCREMENT BY 1';
+  END IF;
+END;
+/
