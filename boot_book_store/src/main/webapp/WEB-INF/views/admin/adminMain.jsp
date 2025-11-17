@@ -139,6 +139,17 @@
 	      });
 
 	      // 🚀 페이지마다 초기화 함수 실행
+		  if (url.includes("/admin/board/edit")) {
+	        if (typeof initNoticeEdit === "function") {
+	          initNoticeEdit();
+	        }
+	      }
+
+	      if (url.includes("/admin/board/detail")) {
+	        if (typeof initNoticeDetail === "function") {
+	          initNoticeDetail();
+	        }
+	      }
 	      if (url.includes("/admin/notice/write")) {
 	        if (typeof initNoticeWrite === "function") {
 	          initNoticeWrite();
@@ -381,6 +392,7 @@
   </script>
 </body>
 </html>
+
 
 
 
