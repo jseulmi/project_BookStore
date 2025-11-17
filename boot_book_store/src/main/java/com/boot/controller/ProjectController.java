@@ -48,6 +48,12 @@ public class ProjectController {
     private BookBuyDAO bookBuyDAO;
     @Autowired
     private CartDAO cartDAO;
+    @Autowired
+    private OrderDetailDAO orderDetailDAO;
+    @Autowired
+    private OrderDetailService orderDetailService;
+    @Autowired
+    private OrderService orderService;
 	@Autowired
     private WishlistService wishlistService;
 
@@ -333,125 +339,7 @@ public class ProjectController {
 		return (String) session.getAttribute("loginId");
 	}
 
-	// ------------------ 장바구니 ------------------
-	@RequestMapping("/cart")
-	public String cart(Model model, HttpSession session) {
-		log.info("@# cart()");
-
-		String userId = getLoginId(session);
-		if (userId == null)
-			return "redirect:/login";
-
-		List<CartDTO> cartList = cartDAO.selectCartWithBookByUserId(userId);
-		model.addAttribute("cartList", cartList);
-		return "cart";
-	}
-
-	// ------------------ 장바구니 삭제 ------------------
-	@PostMapping("/deleteCartItems")
-	@ResponseBody
-	@Transactional
-	public ResponseEntity<?> deleteCartItems(@RequestBody Map<String, List<Integer>> body, HttpSession session) {
-	    log.info("==deleteCartItems called==");
-	    String userId = getLoginId(session);
-	    if (userId == null) {
-	        log.warn("Unauthorized access attempt in deleteCartItems");
-	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-	    }
-
-	    List<Integer> cartIds = body.get("cartIds");
-	    log.info("Received cartIds: {}", cartIds);
-
-	    if (cartIds == null || cartIds.isEmpty()) {
-	        log.warn("Bad request: cartIds is null or empty");
-	        return ResponseEntity.badRequest().build();
-	    }
-
-	    try {
-	        int deletedCount = cartDAO.deleteCartItems(cartIds);
-	        log.info("Deleted rows count: {}", deletedCount);  // 여기에 삽입
-	        return ResponseEntity.ok().build();
-	    } catch (Exception e) {
-	        log.error("Error deleting cart items", e);
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-	    }
-	}
-
-	// ------------------ 장바구니 전체 삭제------------------
-    @ResponseBody
-    @Transactional
-    @PostMapping("/clearCart")
-    public ResponseEntity<?> clearCart(HttpSession session) {
-        String userId = getLoginId(session);
-        if (userId == null) {
-            log.warn("Unauthorized access attempt in clearCart");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-
-        try {
-            cartDAO.deleteCartByUserId(userId);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            log.error("Error clearing cart", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-    // ------------------ 주문 처리 ------------------
-    @PostMapping("/orderBooks")
-	@Transactional
-	public String orderBooks(@RequestParam("book_id") List<Integer> bookIds,
-	                         @RequestParam("quantity") List<Integer> quantities,
-	                         HttpSession session,
-	                         Model model) {
-	    String userId = getLoginId(session);
-	    if (userId == null) {
-	        log.warn("User not logged in - redirect to login");
-	        return "redirect:/login";
-	    }
-	    if (bookIds == null || bookIds.isEmpty()) {
-	        log.warn("No bookIds received - redirect to cart");
-	        return "redirect:/cart";
-	    }
-
-	    List<Integer> invalidBookIds = new ArrayList<Integer>();
-
-	    for (int i = 0; i < bookIds.size(); i++) {
-	        int bookId = bookIds.get(i);
-	        int qty = quantities.get(i);
-
-	        log.info("Checking existence for bookId: {}", bookId);
-	        if (!bookDAO.existsById(bookId)) {
-	            log.error("Book ID {} does not exist", bookId);
-	            invalidBookIds.add(bookId);
-	            continue;
-	        }
-
-	        BookBuyDTO buyDTO = new BookBuyDTO();
-	        buyDTO.setBook_id(bookId);
-	        buyDTO.setUser_id(userId);
-	        buyDTO.setQuantity(qty);
-	        buyDTO.setPurchase_date(new Date());
-
-	        log.info("Inserting BookBuy for bookId: {}, quantity: {}", bookId, qty);
-	        int insertedCount = bookBuyDAO.insertBookBuy(buyDTO);
-	        log.info("Inserted rows count: {}", insertedCount);
-	        
-	        log.info("Deleting cart item for userId: {}, bookId: {}", userId, bookId);
-	        int deletedCount = cartDAO.deleteCartItemByUserIdAndBookId(userId, bookId);
-	        log.info("Deleted rows count: {}", deletedCount);
-	    }
-
-	    if (!invalidBookIds.isEmpty()) {
-	        model.addAttribute("error", "일부 책이 존재하지 않습니다: " + invalidBookIds);
-	        return "cart";
-	    }
-
-	    log.info("Order processing completed, redirecting to purchaseList");
-	    return "redirect:/MyPage/purchaseList";
-	}
-
-    // 구매 내역 페이지
+	// 구매내역 페이지
     @RequestMapping("/MyPage/purchaseList")
     public String purchaseList(Model model, HttpSession session) {
         log.info("@# purchaseList()");
@@ -462,15 +350,34 @@ public class ProjectController {
         Map<String, Object> userInfo = userService.getUser(userId);
         if (userInfo != null) {
             String name = (String) userInfo.get("user_name");
-            String nickname = (String) userInfo.get("user_nickname");
             session.setAttribute("loginDisplayName", name);
-            session.setAttribute("user_nickname", nickname); // ★ 추가
         }
 
-        List<BookBuyDTO> purchaseList = bookBuyDAO.selectPurchaseListByUserId(userId);
+        List<OrderDTO> purchaseList = orderDAO.selectPurchaseListByUserId(userId);
         model.addAttribute("purchaseList", purchaseList);
 
         return "MyPage/purchaseList";
+    }
+    
+    // 구매내역 상세 페이지
+    @GetMapping("/purchaseDetail")
+    public String purchaseDetail(@RequestParam("orderId") long orderId, Model model) {
+        List<OrderDetailDTO> orderDetails = orderDetailService.getOrderDetailsByOrderId(orderId);
+
+        int totalQuantity = orderDetails.stream().mapToInt(OrderDetailDTO::getQuantity).sum();
+        int totalPayment = orderDetails.stream()
+                            .mapToInt(od -> od.getQuantity() * od.getPurchase_price())
+                            .sum();
+
+        // 주문 테이블에서 배송비, 총 결제 금액 조회
+        OrderDTO order = orderService.getOrderById(orderId); 
+
+        model.addAttribute("orderDetails", orderDetails);
+        model.addAttribute("totalQuantity", totalQuantity);
+        model.addAttribute("totalPayment", totalPayment);
+        model.addAttribute("order", order);  // 모델에 order 추가
+
+        return "MyPage/purchaseDetail";
     }
 
 	@GetMapping("/board")
