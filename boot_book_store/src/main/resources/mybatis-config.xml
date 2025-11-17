@@ -15,5 +15,6 @@
 		<mapper resource="mybatis/mappers/SearchDAO.xml"/>
 		<mapper resource="mybatis/mappers/User.xml"/>
 		<mapper resource="mybatis/mappers/UserReviewMapper.xml"/>
+		<mapper resource="mybatis/mappers/OrderHistoryMapper.xml"/>
 	</mappers>
 </configuration>
