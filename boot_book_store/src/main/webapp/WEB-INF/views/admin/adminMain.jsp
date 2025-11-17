@@ -179,6 +179,12 @@
 	      });
 	  }
 	}
+
+	// 문의 상세보기 로드 함수
+	function loadInquiryDetail(inquiryId) {
+	  loadPage('/inquiry/admin/detail?inquiry_id=' + inquiryId);
+	}
+
     // 메뉴 클릭 이벤트 연결
     document.querySelectorAll('.nav-item button').forEach(btn => {
       btn.addEventListener("click", () => {
@@ -264,4 +270,5 @@
   </script>
 </body>
 </html>
+
 
