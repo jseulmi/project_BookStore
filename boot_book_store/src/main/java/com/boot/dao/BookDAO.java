@@ -14,4 +14,9 @@ public interface BookDAO {
     public void updateBook(BookDTO book);
     public void deleteBook(int book_id);
     boolean existsById(int bookId);
+    int countBooks();
+    List<BookDTO> selectBooksPaging(
+            @Param("offset") int offset,
+            @Param("limit") int limit
+        );
 }
