@@ -69,7 +69,7 @@ public class AdminBookController {
     /** 도서 수정 화면 */
     @GetMapping("/edit")
     public String editPage(@RequestParam("id") int bookId, Model model) {
-        BookDTO book = bookDAO.selectBookById(bookId);
+        BookDTO book = bookDAO.findById(bookId);
         model.addAttribute("book", book);
         model.addAttribute("genres", bookService.getAllGenres());
         return "admin/adminBookEdit"; // /WEB-INF/views/admin/adminBookEdit.jsp
