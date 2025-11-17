@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boot.dao.OrderDetailDAO">
+	<insert id="insertOrderDetail" parameterType="com.boot.dto.OrderDetailDTO" useGeneratedKeys="false">
+	    <selectKey keyProperty="order_detail_id" resultType="int" order="BEFORE">
+	        SELECT orderdetail_seq.NEXTVAL FROM dual
+	    </selectKey>
+	    INSERT INTO OrderDetail (order_detail_id, order_id, book_id, quantity, purchase_price)
+		VALUES (#{order_detail_id}, #{order_id}, #{book_id}, #{quantity}, #{purchase_price})
+	</insert>
+	
+	<select id="selectOrderDetailsByOrderId"
+	        parameterType="long"
+	        resultType="com.boot.dto.OrderDetailDTO">
+	    SELECT
+	        od.order_detail_id,
+	        od.order_id,
+	        od.book_id,
+	        od.quantity,
+	        od.purchase_price,
+	        b.book_title,
+	        b.book_image_path AS book_image_url,
+	        o.shipping_fee           -- 주문 테이블의 배송비 컬럼 추가
+	    FROM OrderDetail od
+	    JOIN Book b ON od.book_id = b.book_id
+	    JOIN Orders o ON od.order_id = o.order_id
+	    WHERE od.order_id = #{orderId}
+	</select>
+
+</mapper>

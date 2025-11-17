@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boot.dao.OrderDAO">
+
+    <insert id="insertOrder" parameterType="com.boot.dto.OrderDTO" useGeneratedKeys="false">
+	    <selectKey keyProperty="order_id" resultType="int" order="BEFORE">
+	        SELECT orders_seq.NEXTVAL FROM dual
+	    </selectKey>
+	    INSERT INTO Orders (order_id, user_id, order_date, total_quantity, total_price, shipping_fee)
+		VALUES (#{order_id}, #{user_id}, SYSDATE, #{total_quantity}, #{total_price}, #{shipping_fee})
+	</insert>
+
+	<resultMap id="OrderResultMap" type="com.boot.dto.OrderDTO">
+	    <id property="order_id" column="order_id"/>
+	    <result property="user_id" column="user_id"/>
+	    <result property="order_date" column="order_date"/>
+	    <result property="total_quantity" column="total_quantity"/>
+	    <result property="total_price" column="total_price"/>
+	    
+	    <collection property="orderDetails" ofType="com.boot.dto.OrderDetailDTO">
+	        <id property="order_detail_id" column="order_detail_id"/>
+	        <result property="order_id" column="order_id"/>
+	        <result property="book_id" column="book_id"/>
+	        <result property="quantity" column="quantity"/>
+	        <result property="purchase_price" column="purchase_price"/>
+	        <result property="book_title" column="book_title"/>
+	    </collection>
+	</resultMap>
+	
+	<select id="selectPurchaseListByUserId" parameterType="string" resultMap="OrderResultMap">
+	  SELECT o.order_id, o.user_id, o.order_date, o.total_quantity, o.total_price,
+	         d.order_detail_id, d.book_id, d.quantity, d.purchase_price,
+	         b.book_title
+	  FROM Orders o
+	  LEFT JOIN OrderDetail d ON o.order_id = d.order_id
+	  LEFT JOIN Book b ON d.book_id = b.book_id
+	  WHERE o.user_id = #{userId}
+	  ORDER BY o.order_date DESC
+	</select>
+
+	<select id="selectOrderById" parameterType="java.lang.Long" resultType="com.boot.dto.OrderDTO">
+	    SELECT order_id, user_id, order_date, total_quantity, total_price, shipping_fee
+	    FROM Orders
+	    WHERE order_id = #{orderId}
+	</select>
+
+</mapper>
