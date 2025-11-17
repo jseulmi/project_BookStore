@@ -16,5 +16,7 @@
 		<mapper resource="mybatis/mappers/User.xml"/>
 		<mapper resource="mybatis/mappers/UserReviewMapper.xml"/>
 		<mapper resource="mybatis/mappers/OrderHistoryMapper.xml"/>
+		<mapper resource="mybatis/mappers/Board.xml"/>
+		<mapper resource="mybatis/mappers/BoardAttach.xml"/>
 	</mappers>
 </configuration>
