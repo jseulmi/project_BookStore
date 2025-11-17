@@ -26,6 +26,12 @@ public interface InquiryDAO {
     // 답변 작성
     int insertReply(InquiryReplyDTO reply);
     
+    // 답변 수정 (reply_id로)
+    int updateReply(InquiryReplyDTO reply);
+    
+    // inquiry_id로 답변 조회
+    InquiryReplyDTO selectReplyByInquiryId(@Param("inquiry_id") int inquiryId);
+    
     // 문의 상태 업데이트 (답변완료로 변경)
     int updateInquiryStatus(@Param("inquiry_id") int inquiryId, @Param("status") String status);
     
