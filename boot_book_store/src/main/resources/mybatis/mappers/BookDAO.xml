@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boot.dao.BookDAO">
+
+    <!-- 전체조회 -->
+    <select id="selectAllBooks" resultType="com.boot.dto.BookDTO">
+        SELECT *
+        FROM Book
+        ORDER BY book_id
+    </select>
+
+    <!-- 단건조회 -->
+    <select id="selectBookById" parameterType="int" resultType="com.boot.dto.BookDTO">
+        SELECT *
+        FROM Book
+        WHERE book_id = #{book_id}
+    </select>
+
+    <!-- 등록 -->
+    <insert id="insertBook" parameterType="com.boot.dto.BookDTO">
+        INSERT INTO Book(
+            book_id, book_title, book_writer, book_pub, book_date,
+            genre_id, book_price, book_count, book_comm, book_isbn, book_image_path
+        ) VALUES (
+            (SELECT NVL(MAX(book_id) + 1, 1) FROM Book),
+            #{book_title},
+            #{book_writer},
+            #{book_pub},
+            #{book_date, jdbcType=DATE},
+            #{genre_id},
+            #{book_price},
+            #{book_count},
+            #{book_comm},
+            #{book_isbn},
+            #{book_image_path}
+        )
+    </insert>
+
+    <!-- 수정 -->
+    <update id="updateBook" parameterType="com.boot.dto.BookDTO">
+        UPDATE Book SET
+            book_title = #{book_title},
+            book_writer = #{book_writer},
+            book_pub = #{book_pub},
+            book_date = #{book_date, jdbcType=DATE},
+            genre_id = #{genre_id},
+            book_price = #{book_price},
+            book_count = #{book_count},
+            book_comm = #{book_comm},
+            book_isbn = #{book_isbn},
+            book_image_path = #{book_image_path}
+        WHERE book_id = #{book_id}
+    </update>
+
+    <!-- 페이징 조회 -->
+    <select id="selectBooksPaging" resultType="com.boot.dto.BookDTO">
+        SELECT *
+        FROM (
+            SELECT ROWNUM rn, a.*
+            FROM (
+                SELECT *
+                FROM Book
+                ORDER BY book_id
+            ) a
+            WHERE ROWNUM &lt;= #{offset} + #{limit}
+        )
+        WHERE rn > #{offset}
+    </select>
+
+	<select id="countBooks" resultType="int">
+    SELECT COUNT(*) FROM Book
+	</select>
+
+
+    <!-- 삭제 -->
+    <delete id="deleteBook" parameterType="int">
+        DELETE FROM Book
+        WHERE book_id = #{book_id}
+    </delete>
+
+</mapper>
