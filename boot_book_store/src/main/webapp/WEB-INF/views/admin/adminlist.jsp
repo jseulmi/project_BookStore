@@ -65,7 +65,6 @@
 
     .inquiry-table tbody tr:hover {
       background-color: #F9FAFB;
-      cursor: pointer;
     }
 
     .inquiry-table tbody tr:last-child td {
@@ -104,6 +103,22 @@
 
     .btn-view:hover {
       background-color: #4338CA;
+    }
+
+    .btn-edit {
+      background-color: #10B981;
+      color: white;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .btn-edit:hover {
+      background-color: #059669;
     }
   </style>
 </head>
@@ -185,7 +200,7 @@
               </c:when>
               <c:otherwise>
                 <c:forEach var="inquiry" items="${inquiryList}">
-                  <tr onclick="location.href='<c:url value='/inquiry/admin/detail?inquiry_id=${inquiry.inquiry_id}'/>'">
+                  <tr>
                     <td>${inquiry.inquiry_id}</td>
                     <td>${inquiry.user_name}</td>
                     <td style="font-weight: 500;">${inquiry.title}</td>
@@ -198,8 +213,14 @@
                       <fmt:formatDate value="${inquiry.created_date}" pattern="yyyy-MM-dd" />
                     </td>
                     <td onclick="event.stopPropagation();">
-                      <a href="<c:url value='/inquiry/admin/detail?inquiry_id=${inquiry.inquiry_id}'/>" 
-                         class="btn-view">상세보기</a>
+                      <c:choose>
+                        <c:when test="${inquiry.status == '답변완료'}">
+                          <button onclick="loadInquiryDetail(${inquiry.inquiry_id})" class="btn-edit">답변수정</button>
+                        </c:when>
+                        <c:otherwise>
+                          <button onclick="loadInquiryDetail(${inquiry.inquiry_id})" class="btn-view">답변</button>
+                        </c:otherwise>
+                      </c:choose>
                     </td>
                   </tr>
                 </c:forEach>
