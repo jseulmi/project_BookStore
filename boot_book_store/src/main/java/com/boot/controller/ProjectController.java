@@ -384,11 +384,6 @@ public class ProjectController {
         return "MyPage/purchaseDetail";
     }
 
-	@GetMapping("/board")
-	public String board() {
-		// /WEB-INF/views/search/search.jsp 로 forward
-		return "board";
-	}
 	
 //	관리자 화면에서 게시판을 불러옴
 	@GetMapping("/admin/boardManagement")
