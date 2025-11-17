@@ -1,53 +1,53 @@
-package com.boot.controller;
+package com.boot.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession; // 추가
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import com.boot.dto.BookDTO;
+import com.boot.dao.UserReviewDAO;
+import com.boot.dao.OrderDAO;
 import com.boot.dto.UserReviewDTO;
-import com.boot.service.BookService;
-import com.boot.service.UserReviewService;
+import com.boot.dto.OrderDTO;
 
 import lombok.RequiredArgsConstructor;
 
-@Controller
+@Service
 @RequiredArgsConstructor
-public class UserReviewController {
+public class UserReviewService {
 
-    private final UserReviewService userReviewService;
-    private final BookService bookService; // BookService 주입
+    private final UserReviewDAO userReviewDAO;
+    private final OrderDAO orderDAO; // BookBuyDAO 주입
 
     // 리뷰 작성
-    @PostMapping("/review/write")
-    public String writeReview(UserReviewDTO reviewDTO, Model model, HttpSession session) {
-    	String nickname = (String) session.getAttribute("user_nickname");
-        if (nickname == null || nickname.trim().isEmpty()) {
-            throw new RuntimeException("세션에 닉네임 정보가 없습니다!");
+    @Transactional
+    public void writeReview(UserReviewDTO reviewDTO) {
+        // 사용자 주문 내역 주문 상세 기준으로 구매 여부 확인
+        boolean purchased = orderDAO.selectPurchaseListByUserId(reviewDTO.getUser_id())
+                                    .stream()
+                                    .flatMap(order -> order.getOrderDetails().stream()) // 주문별 상세 펼침
+                                    .anyMatch(detail -> detail.getBook_id() == reviewDTO.getBook_id());
+
+        if (!purchased) {
+            throw new RuntimeException("구매한 책만 리뷰를 작성할 수 있습니다.");
         }
-        reviewDTO.setUser_nickname(nickname);
-        
-        // 리뷰 저장
-        userReviewService.writeReview(reviewDTO);
 
-        // 작성 완료 메시지
-        model.addAttribute("msg", "리뷰가 작성되었습니다.");
-
-        // 도서 정보 조회
-        BookDTO book = bookService.getAllBooks().stream()
-                .filter(b -> b.getBook_id() == reviewDTO.getBook_id())
-                .findFirst()
-                .orElse(null);
-        model.addAttribute("book", book);
-
-        // 도서에 달린 리뷰 목록 조회
-        List<UserReviewDTO> reviews = userReviewService.getReviewsByBookId(reviewDTO.getBook_id());
-        model.addAttribute("reviews", reviews);
-
-        return "redirect:/SearchDetail?book_id=" + reviewDTO.getBook_id();
+        userReviewDAO.insertReview(reviewDTO);
     }
+
+
+    // 특정 도서의 리뷰 목록 조회
+    public List<UserReviewDTO> getReviewsByBookId(Long bookId) {
+        return userReviewDAO.findReviewsByBookId(bookId);
+    }
+
+    // 사용자가 해당 책을 구매했는지 확인 (컨트롤러에서 JSP용)
+    public boolean hasPurchasedBook(String userId, int bookId) {
+        List<OrderDTO> purchases = orderDAO.selectPurchaseListByUserId(userId);
+
+        return purchases.stream()
+            .flatMap(order -> order.getOrderDetails().stream())  // 주문별 상세 펼침
+            .anyMatch(detail -> detail.getBook_id() == bookId);   // book_id 비교
+    }
+
 }
