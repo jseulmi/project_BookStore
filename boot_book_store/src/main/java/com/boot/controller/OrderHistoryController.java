@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.boot.dto.OrderHistoryDetailDTO;
 import com.boot.dto.OrderHistoryListDTO;
 import com.boot.service.OrderHistoryService;
 
@@ -103,7 +104,8 @@ public class OrderHistoryController {
     @GetMapping("/detail")
     public String orderDetail(@RequestParam("order_id") int orderId, Model model) {
 
-        model.addAttribute("order", orderService.getOrderDetail(orderId));
+    	OrderHistoryDetailDTO order = orderService.getOrderDetail(orderId);
+        model.addAttribute("order", order);
         return "admin/order/orderDetail";
     }
 }
