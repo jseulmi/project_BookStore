@@ -58,7 +58,7 @@
 					            <!-- 모든 사용자에게 보임 -->
 					            <a href="<c:url value='/inquiry'/>">1:1 문의</a>
 					            <c:if test="${sessionScope.userRole == 'ADMIN'}">
-								    <li><a href="/adminMain">관리자 모드</a></li>
+								    <a href="/adminMain">관리자 모드</a>
 					            </c:if>
 					        </div>
 					    </div>
