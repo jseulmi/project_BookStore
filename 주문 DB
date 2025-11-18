@@ -4,7 +4,7 @@ DROP TABLE bookbuy;
 -- 주문 테이블: Order
 CREATE TABLE Orders (
     order_id       NUMBER PRIMARY KEY,
-    user_id        VARCHAR2(50) NOT NULL,
+    user_id        VARCHAR2(60) NOT NULL,
     order_date     DATE DEFAULT SYSDATE,
     total_quantity NUMBER NOT NULL,
     total_price    NUMBER NOT NULL,
