@@ -31,4 +31,31 @@
 <select id="countBooks" resultType="int">
     SELECT COUNT(*) FROM Book
 </select>
+
+<select id="recommendByBuy" parameterType="string" resultType="com.boot.dto.BookDTO">
+  <![CDATA[
+    SELECT *
+    FROM (
+        SELECT 
+            b.*, 
+            DBMS_RANDOM.VALUE AS rnd
+        FROM Book b
+        WHERE b.genre_id IN (
+            SELECT DISTINCT b2.genre_id
+            FROM Orders o
+            JOIN OrderDetail od ON o.order_id = od.order_id
+            JOIN Book b2 ON od.book_id = b2.book_id
+            WHERE o.user_id = #{userId}
+        )
+        AND b.book_id NOT IN (
+            SELECT od.book_id
+            FROM Orders o
+            JOIN OrderDetail od ON o.order_id = od.order_id
+            WHERE o.user_id = #{userId}
+        )
+        ORDER BY rnd
+    )
+    WHERE ROWNUM <= 3
+  ]]>
+</select>
 </mapper>
