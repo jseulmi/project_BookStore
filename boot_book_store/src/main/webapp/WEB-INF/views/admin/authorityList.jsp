@@ -305,7 +305,7 @@ function updateRole(userId) {
             return;
         }
         alert("권한이 변경되었습니다.");
-        location.reload();
+		refreshAuthorityPage();
     });
 }
 
@@ -321,8 +321,11 @@ function removeAdmin(userId) {
     .then(res => res.text())
     .then(result => {
         alert("관리자 권한이 제거되었습니다.");
-        location.reload();
+		refreshAuthorityPage();
     });
+}
+function refreshAuthorityPage() {
+    loadPage("/admin/member/authority");
 }
 </script>
 
