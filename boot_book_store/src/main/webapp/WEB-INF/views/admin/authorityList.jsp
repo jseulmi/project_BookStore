@@ -375,68 +375,63 @@
 </div>
 
 <script>
-function updateRole(userId) {
-    const select = document.getElementById('role_' + userId);
-    const newRole = select.value;
-    
-    if (!confirm('권한을 변경하시겠습니까?')) {
-        return;
-    }
+	function updateRole(userId) {
+	    const select = document.getElementById('role_' + userId);
+	    const newRole = select.value;
 
-    fetch('/admin/member/updateRole', {
-        method: 'POST',
-        headers: { 
-            'Content-Type': 'application/json' 
-        },
-        body: JSON.stringify({
-            user_id: userId,
-            user_role: newRole
-        })
-    })
-    .then(res => res.text())
-    .then(result => {
-        alert('권한이 변경되었습니다.');
-        if (typeof loadPage === 'function') {
-            loadPage('/admin/member/authority');
-        } else {
-            location.reload();
-        }
-    })
-    .catch(err => {
-        console.error(err);
-        alert('오류가 발생했습니다.');
-    });
-}
+	    if (!confirm('권한을 변경하시겠습니까?')) return;
 
-function removeAdmin(userId) {
-    if (!confirm('해당 사용자의 관리자 권한을 제거하시겠습니까?')) {
-        return;
-    }
+	    fetch('/admin/member/updateRole', {
+	        method: 'POST',
+	        headers: { 'Content-Type': 'application/json' },
+	        body: JSON.stringify({ user_id: userId, user_role: newRole })
+	    })
+	    .then(res => res.text())
+	    .then(result => {
 
-    fetch('/admin/member/updateRole', {
-        method: 'POST',
-        headers: { 
-            'Content-Type': 'application/json' 
-        },
-        body: JSON.stringify({
-            user_id: userId,
-            user_role: 'USER'
-        })
-    })
-    .then(res => res.text())
-    .then(result => {
-        alert('관리자 권한이 제거되었습니다.');
-        if (typeof loadPage === 'function') {
-            loadPage('/admin/member/authority');
-        } else {
-            location.reload();
-        }
-    })
-    .catch(err => {
-        console.error(err);
-        alert('오류가 발생했습니다.');
-    });
-}
+	        if (result === "REDIRECT_MAIN") {
+	            alert("권한이 변경되어 관리자 권한에서 로그아웃됩니다.");
+	            location.href = "/main";
+	            return;
+	        }
+
+	        alert('권한이 변경되었습니다.');
+	        location.reload();
+	    })
+	    .catch(err => {
+	        console.error(err);
+	        alert('오류가 발생했습니다.');
+	    });
+	}
+
+
+	function removeAdmin(userId) {
+
+	    if (!confirm('해당 사용자의 관리자 권한을 제거하시겠습니까?')) return;
+
+	    fetch('/admin/member/updateRole', {
+	        method: 'POST',
+	        headers: { 'Content-Type': 'application/json' },
+	        body: JSON.stringify({ user_id: userId, user_role: "USER" })
+	    })
+	    .then(res => res.text())
+	    .then(result => {
+
+	        if (result === "REDIRECT_MAIN") {
+	            alert("관리자 권한이 제거되어 관리자 페이지에서 나갑니다.");
+	            location.href = "/main";
+	            return;
+	        }
+
+	        alert("관리자 권한이 제거되었습니다.");
+	        location.reload();
+	    })
+	    .catch(err => {
+	        console.error(err);
+	        alert("오류가 발생했습니다.");
+	    });
+	}
+
 </script>
 
 </body>
