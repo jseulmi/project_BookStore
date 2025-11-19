@@ -109,7 +109,7 @@
             <input type="text" name="user_nickname">
 
             <label>이메일</label>
-            <input type="text" name="user_email">
+            <input type="text" name="user_email" readonly>
 
             <label>전화번호</label>
             <input type="text" name="user_phone_num">
@@ -200,3 +200,4 @@
 
 </body>
 </html>
+
