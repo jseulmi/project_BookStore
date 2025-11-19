@@ -21,4 +21,6 @@ public interface BookDAO {
             @Param("offset") int offset,
             @Param("limit") int limit
         );
+    List<BookDTO> recommendByBuy(String userId);
+    List<BookDTO> getRandomBooks();
 }
