@@ -159,7 +159,7 @@
         user_address = '',
         user_detail_address = '',
         user_name = '탈퇴회원',
-        user_nickname = '탈퇴회원'
+        user_nickname = '비회원'
     WHERE user_id = #{user_id}
       AND user_pw = #{user_pw}
   </update>
@@ -178,7 +178,7 @@
         user_address = '',
         user_detail_address = '',
         user_name = '탈퇴회원',
-        user_nickname = '탈퇴회원'
+        user_nickname = '비회원'
     WHERE user_id = #{user_id}
       AND login_type = #{login_type}
   </update>
