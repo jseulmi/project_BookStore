@@ -45,7 +45,7 @@
 
 | 분야 | 기술 |
 |------|-------|
-| **Frontend** | <img src="https://img.shields.io/badge/html5-E34F26?logo=java">, 
+| **Frontend** | <img src="https://img.shields.io/badge/html5-E34F26?logo=java">
                  <img src="https://img.shields.io/badge/css-663399?logo=java">, JavaScript, jQuery |
 | **Backend** | JSP, Java, Spring Boot, Lombok, MyBatis |
 | **Database** | Oracle Database |
