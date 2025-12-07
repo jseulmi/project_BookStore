@@ -139,14 +139,12 @@
 📄 ERD  
 <details> <summary><strong>ERD 다이어그램</strong></summary>
 
-📸 스크린샷
-
 <img width="1467" height="2106" alt="image" src="https://github.com/user-attachments/assets/443ac567-965d-4d8c-b105-995308a2aff7" />
 
 </details>
 
 📄 테이블 명세서  
-👉 `/docs/table-definition.pdf`
+👉 [database-table-definition.xlsx](https://github.com/user-attachments/files/24016641/database-table-definition.xlsx)
 
 ---
 
