@@ -289,8 +289,8 @@ OAuth2 인증 코드 요청 → 토큰 발급 → 사용자 정보 조회
 각 기능별 동작 방식과 흐름을 직관적으로 확인할 수 있습니다.
 
 ### 📌 전체 시연 영상
-🔗 YouTube 링크: [https://youtu.be/your-video-url  ](https://youtu.be/3Dzys_04iNE)(사용자)
-🔗 YouTube 링크: https://youtu.be/qynV_2sgY8g(관리자)
+🔗 YouTube 링크: https://youtu.be/3Dzys_04iNE (사용자)<br>
+🔗 YouTube 링크: https://youtu.be/qynV_2sgY8g (관리자)
 
 ---
 
