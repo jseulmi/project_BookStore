@@ -123,7 +123,8 @@
 ## 🧭 메뉴 구조도 (PDF)
 
 📄 메뉴 구조도 다운로드  
-👉 [menu-structure.pdf](https://github.com/user-attachments/files/24016517/menu-structure.pdf)
+👉 [온라인_서점_메뉴구조도.pdf](https://github.com/user-attachments/files/24016521/_._.pdf)
+
 
 
 
