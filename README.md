@@ -125,20 +125,25 @@
 📄 메뉴 구조도 다운로드  
 👉 [menu_structure_online_bookstore.pdf](https://github.com/user-attachments/files/24016562/menu_structure_online_bookstore.pdf)
 
-
 ---
 
 ## 🖥 화면 설계서 (PDF)
 
 📄 화면 기획서 보기  
-👉 `/docs/ui-design.pdf`
+👉 [online-bookstore-ui-design.pdf](https://github.com/user-attachments/files/24016616/online-bookstore-ui-design.pdf)
 
 ---
 
 ## 🗂 ERD 및 테이블 명세서
 
 📄 ERD  
-👉 `/docs/erd.pdf`
+👉 <details> <summary><strong>ERD 다이어그램</strong></summary>
+
+📸 스크린샷
+
+<img width="1467" height="2106" alt="image" src="https://github.com/user-attachments/assets/443ac567-965d-4d8c-b105-995308a2aff7" />
+
+</details>
 
 📄 테이블 명세서  
 👉 `/docs/table-definition.pdf`
