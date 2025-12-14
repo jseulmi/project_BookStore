@@ -166,7 +166,6 @@ Spring Security 없이 세션 기반 인증 구현
 
 유효성 검사 + 예외 처리 적용
 </details>
-🔐 회원 / 인증 기능
 <details> <summary><strong>로그인 / 로그아웃</strong></summary>
 
 https://github.com/user-attachments/assets/7b794e31-d88a-4e47-b945-9be9f9398579
