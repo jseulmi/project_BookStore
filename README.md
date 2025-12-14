@@ -153,9 +153,10 @@
 ## 🔍 핵심 구현 내용 (내가 담당한 기능)
 
 🔐 회원 / 인증 기능
-<details> <summary><strong>회원가입 / 로그인 / 로그아웃</strong></summary>
+<details> <summary><strong>회원가입</strong></summary>
   
 
+https://github.com/user-attachments/assets/d51a3343-e123-4b68-9bf6-3e56c6487d57
 
 📌 설명
 
@@ -164,12 +165,25 @@ Spring Security 없이 세션 기반 인증 구현
 로그인/로그아웃 전체 흐름 설계
 
 유효성 검사 + 예외 처리 적용
+</details>
+🔐 회원 / 인증 기능
+<details> <summary><strong>로그인 / 로그아웃</strong></summary>
 
+https://github.com/user-attachments/assets/7b794e31-d88a-4e47-b945-9be9f9398579
 
-(여기에 이미지 삽입)
+📌 설명
 
+Spring Security 없이 세션 기반 인증 구현
+
+로그인/로그아웃 전체 흐름 설계
+
+유효성 검사 + 예외 처리 적용
 </details>
 <details> <summary><strong>소셜 로그인(Kakao / Naver / Google)</strong></summary>
+  
+
+https://github.com/user-attachments/assets/21af5f80-e574-4198-bb87-da438aabba2b
+
 📌 설명
 
 OAuth2 인증 코드 요청 → 토큰 발급 → 사용자 정보 조회
@@ -178,84 +192,58 @@ OAuth2 인증 코드 요청 → 토큰 발급 → 사용자 정보 조회
 
 기존 계정 연동 처리
 
-📸 스크린샷
-
-(이미지)
-
 </details>
-<details> <summary><strong>아이디·비밀번호 찾기</strong></summary>
+<details> <summary><strong>아이디/비밀번호 찾기</strong></summary>
+  
+
+https://github.com/user-attachments/assets/e98efafb-b8cc-49c4-bc56-79365feb042a
+
+
 📌 설명
 
 이메일 인증번호 발송
 
 비밀번호 재설정 로직 구현
 
-📸 스크린샷
-
-(이미지)
 </details>
 🛠 관리자 기능
 <details> <summary><strong>사용자 게시판 관리</strong></summary>
+  
+
+https://github.com/user-attachments/assets/74fa878b-30ba-4ac2-9a34-53d9c1d306f0
+
+
 📌 설명
 
 사용자 게시글 모니터링 및 삭제
 
 신고 기능 염두에 둔 확장성 있는 구조 설계
-
-📸 스크린샷
-
-(이미지)
-
 </details> 
 <details> <summary><strong>주문 관리(주문 리스트 / 주문 상세)</strong></summary>
+  
+
+https://github.com/user-attachments/assets/a37c05bc-4e4a-4d2c-bfe0-f0faaf64d34b
+
+
 📌 설명
 
 주문 테이블 + 상세 테이블 조인 조회
 
 배송 상태 관리 등 확장 가능 구조 설계
-
-📸 스크린샷
-
-(이미지)
-
 </details> 
+
+💬 회원 탈퇴
 <details> <summary><strong>탈퇴 회원 관리</strong></summary>
+  
+
+https://github.com/user-attachments/assets/8588c329-457a-462a-844b-e5f167ce2aa3
+
+
 📌 설명
 
 관리자 페이지에서 탈퇴 회원 조회
 
 계정 상태값 기반 필터링 처리
-
-📸 스크린샷
-
-(이미지)
-
-</details>
-💬 커뮤니티 기능
-<details> <summary><strong>공지사항 조회</strong></summary>
-📌 설명
-
-사용자 화면 전용 조회 페이지
-
-조회수 증가 로직 포함
-
-📸 스크린샷
-
-(이미지)
-
-</details>
-회원 탈퇴
-<details> <summary><strong>탈퇴 회원 관리</strong></summary>
-📌 설명
-
-관리자 페이지에서 탈퇴 회원 조회
-
-계정 상태값 기반 필터링 처리
-
-📸 스크린샷
-
-(이미지)
-
 </details>
 ---
 
