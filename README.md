@@ -193,9 +193,8 @@ OAuth2 인증 코드 요청 → 토큰 발급 → 사용자 정보 조회
 📸 스크린샷
 
 (이미지)
-
-🛠 관리자 기능
 </details>
+🛠 관리자 기능
 <details> <summary><strong>사용자 게시판 관리</strong></summary>
 📌 설명
 
