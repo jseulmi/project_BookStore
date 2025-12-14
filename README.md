@@ -263,7 +263,7 @@ https://github.com/user-attachments/assets/a37c05bc-4e4a-4d2c-bfe0-f0faaf64d34b
 │  ├─ application.properties
 │  └─ mybatis-config.xml
 │ 
-└─ src/main/webapp/WEB-INF
+├─ src/main/webapp/WEB-INF
 │  └─ views
 │     ├─ admin
 │     ├─ board
