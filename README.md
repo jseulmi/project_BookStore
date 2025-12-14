@@ -154,6 +154,11 @@
 
 🔐 회원 / 인증 기능
 <details> <summary><strong>회원가입 / 로그인 / 로그아웃</strong></summary>
+  
+
+https://github.com/user-attachments/assets/302f788d-3747-4a18-b1d7-b2f4c0c862ab
+
+
 📌 설명
 
 Spring Security 없이 세션 기반 인증 구현
@@ -162,7 +167,6 @@ Spring Security 없이 세션 기반 인증 구현
 
 유효성 검사 + 예외 처리 적용
 
-📸 스크린샷
 
 (여기에 이미지 삽입)
 
@@ -190,31 +194,8 @@ OAuth2 인증 코드 요청 → 토큰 발급 → 사용자 정보 조회
 
 (이미지)
 
-</details> <details> <summary><strong>탈퇴 회원 관리</strong></summary>
-📌 설명
-
-상태값 변경 방식(DELETE X → STATUS 변경)
-
-관리자 페이지에서 조회/관리 가능
-
-📸 스크린샷
-
-(이미지)
-
-</details>
 🛠 관리자 기능
-<details> <summary><strong>공지사항 게시판 CRUD</strong></summary>
-📌 설명
-
-관리자 권한 전용 게시판
-
-작성/수정/삭제/조회 + 첨부 파일 지원 가능 구조
-
-📸 스크린샷
-
-(이미지)
-
-</details> <details> <summary><strong>사용자 게시판 관리</strong></summary>
+<details> <summary><strong>사용자 게시판 관리</strong></summary>
 📌 설명
 
 사용자 게시글 모니터링 및 삭제
@@ -261,7 +242,19 @@ OAuth2 인증 코드 요청 → 토큰 발급 → 사용자 정보 조회
 (이미지)
 
 </details>
+회원 탈퇴
+</details> <details> <summary><strong>탈퇴 회원 관리</strong></summary>
+📌 설명
 
+관리자 페이지에서 탈퇴 회원 조회
+
+계정 상태값 기반 필터링 처리
+
+📸 스크린샷
+
+(이미지)
+
+</details>
 ---
 
 ## 📬 프로젝트 구조
