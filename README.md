@@ -192,16 +192,9 @@
 ## 🔍 핵심 구현 내용 (내가 담당한 기능)
 
 📚 도서 기능
-<details> <summary><strong>도서 조회기능</strong></summary>
-  
+<details> <summary><strong>도서 조회및 키워드 검색기능</strong></summary>
+  https://youtu.be/dNVIvWZNZEs
 
-
-  📌 설명
-
-
-</details>
-
-<details> <summary><strong>도서 키워드 검색기능</strong></summary>
 
   📌 설명
 
