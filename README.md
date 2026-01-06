@@ -191,8 +191,8 @@
 
 ## 🔍 핵심 구현 내용 (내가 담당한 기능)
 
-🔐 회원 / 인증 기능
-<details> <summary><strong>도서 조회기능></strong></summary>
+📚 도서 기능
+<details> <summary><strong>도서 조회기능</strong></summary>
   
 
 
