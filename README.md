@@ -213,9 +213,23 @@ Spring MVC 패턴을 기반으로 도서 목록 조회, 검색, 상세 조회 �
   - MyBatis Map 파라미터를 활용해 동적 SQL 처리
 </details>
 
-- **도서 리뷰기능**
-  시연영상 : [https://youtu.be/yOLvvpRyOMU](https://youtu.be/yOLvvpRyOMU)
-  📌 설명
+<details>
+<summary><strong>도서 리뷰기능</strong></summary>
+  
+시연영상 : [https://youtu.be/yOLvvpRyOMU](https://youtu.be/yOLvvpRyOMU)
+
+📌 설명
+도서 상세 페이지에서 구매 이력이 있는 사용자만 리뷰를 작성할 수 있도록 제한하는
+리뷰 등록 및 조회 기능을 구현했습니다.
+
+리뷰 관련 로직은 서버 단에서 사용자 상태를 판단하고,
+그 결과에 따라 프론트 화면(UI)을 제어하는 구조로 설계했습니다.
+
+- 📝 도서 리뷰 조회
+  - 도서 상세 페이지 진입 시 해당 도서에 등록된 리뷰 목록 조회
+  - 도서 ID를 기준으로 리뷰 데이터를 조회하여 사용자에게 제공
+</details>
+
 ---
 
 ## 📬 프로젝트 구조
