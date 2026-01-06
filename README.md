@@ -193,7 +193,7 @@
 
 ## 📚 도서 기능
 - **도서 조회 및 키워드 검색기능**
-  - 시연영상 : https://youtu.be/dNVIvWZNZEs
+  - 시연영상 : [https://youtu.be/dNVIvWZNZEs](https://youtu.be/Q8lhhTB_oBQ)
   - 📌 설명
     
 - **도서 리뷰기능**
