@@ -177,8 +177,8 @@
 
 ## 🔍 핵심 구현 내용 (내가 담당한 기능)
 
-🔐 회원 / 인증 기능
-<details> <summary><strong>회원가입</strong></summary>
+📚 도서 조회 기능
+<details> <summary><strong>도서 페이지>도서>도서>도n</summary>
   
 
 https://github.com/user-attachments/assets/d51a3343-e123-4b68-9bf6-3e56c6487d57
