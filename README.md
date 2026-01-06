@@ -83,14 +83,65 @@
 
 ## ✨ 기능 구성
 
-### 🛍 사용자 기능
-- 🔎 **도서 검색 / 카테고리별 조회**
-- 📚 **도서 상세보기** (리뷰, 평점 포함)
-- 🧡 **찜(좋아요) 목록 관리**
-- 🛒 **장바구니** (추가, 수량 변경, 삭제)
-- 💳 **도서 결제(Toss Payments API)**  
-- 📦 **주문 생성 / 주문 내역 조회**
+<details>
+<summary><strong>🛍 사용자 기능</strong></summary>
 
+- 도서 검색 / 카테고리별 조회  
+- 도서 상세보기 (리뷰, 평점 포함)  
+- 찜(좋아요) 목록 관리  
+- 장바구니 (추가, 수량 변경, 삭제)  
+- 도서 결제(Toss Payments API)  
+- 주문 생성 / 주문 내역 조회  
+
+</details>
+
+<details>
+<summary><strong>🔐 회원 기능</strong></summary>
+
+- 회원가입 / 로그인 / 로그아웃  
+- 소셜 로그인(Naver / Google)  
+- 아이디·비밀번호 찾기  
+- 마이페이지(조회, 수정, 삭제)  
+- 탈퇴 회원 관리  
+- 찜한 도서 목록 확인  
+
+</details>
+
+<details>
+<summary><strong>💬 커뮤니티 기능</strong></summary>
+
+- 사용자 게시판(글 작성, 수정, 조회, 삭제)  
+- 사용자 공지사항(공지 조회)  
+- 1대1 문의  
+
+</details>
+
+<details>
+<summary><strong>🤖 AI 기능</strong></summary>
+
+- Gemini API 기반 챗봇  
+- 사용자 질문 자동 응답  
+
+</details>
+
+<details>
+<summary><strong>🛠 관리자 기능</strong></summary>
+
+- **회원 관리** (상태 변경, 탈퇴 회원 관리)  
+- **도서 관리** (등록 / 수정 / 삭제)  
+- **게시판 관리** (사용자 게시판·공지사항)  
+- **주문 관리** (주문 리스트, 주문 상세)  
+- 문의 리스트 관리  
+
+</details>
+
+<details>
+<summary><strong>🚀 기타 기능</strong></summary>
+
+- 페이징, 검색  
+- 세션 기반 로그인 인증 처리  
+
+</details>
 ---
 
 ### 🔐 회원 기능
