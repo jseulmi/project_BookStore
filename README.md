@@ -194,8 +194,8 @@
 ## 📚 도서 기능
 <details>
 <summary><strong>도서 조회 및 키워드 검색기능</strong></summary>
-  시연영상 : [https://youtu.be/dNVIvWZNZEs](https://youtu.be/Q8lhhTB_oBQ)
-  📌 설명
+  - 시연영상 : [https://youtu.be/dNVIvWZNZEs](https://youtu.be/Q8lhhTB_oBQ)
+  - 📌 설명
   Spring MVC 패턴을 기반으로 도서 목록 조회, 검색, 상세 조회 기능을 구현했습니다.
   전체 도서 목록 조회, 도서 상세 조회, 키워드 및 장르 기반 검색 기능을 제공합니다.
   
