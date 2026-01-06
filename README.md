@@ -191,9 +191,10 @@
 ## 🔍 담당 기능
 
 ## 📚 도서 기능
-- **도서 조회 및 키워드 검색기능**
+<details>
+<summary><strong>도서 조회 및 키워드 검색기능</strong></summary>
   시연영상 : [https://youtu.be/dNVIvWZNZEs](https://youtu.be/Q8lhhTB_oBQ)
-  - 📌 설명
+  📌 설명
   Spring MVC 패턴을 기반으로 도서 목록 조회, 검색, 상세 조회 기능을 구현했습니다.
   전체 도서 목록 조회, 도서 상세 조회, 키워드 및 장르 기반 검색 기능을 제공합니다.
 
@@ -206,7 +207,8 @@
     - 검색어 또는 장르가 존재하는 경우 → 조건 검색 쿼리 실행
     - 키워드 + 장르를 동시에 적용한 복합 조건 검색 지원
     - MyBatis Map 파라미터를 활용해 동적 SQL 처리
-    
+</details>
+
 - **도서 리뷰기능**
   시연영상 : [https://youtu.be/yOLvvpRyOMU](https://youtu.be/yOLvvpRyOMU)
   📌 설명
