@@ -191,7 +191,7 @@
 
 ## 🔍 담당 기능
 
-**📚 도서 기능**
+## 📚 도서 기능
 <details>
 <summary><strong>도서 조회 및 키워드 검색기능</strong></summary>
   
