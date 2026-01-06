@@ -219,6 +219,7 @@ Spring MVC 패턴을 기반으로 도서 목록 조회, 검색, 상세 조회 �
 시연영상 : [https://youtu.be/yOLvvpRyOMU](https://youtu.be/yOLvvpRyOMU)
 
 📌 설명
+
 도서 상세 페이지에서 구매 이력이 있는 사용자만 리뷰를 작성할 수 있도록 제한하는
 리뷰 등록 및 조회 기능을 구현했습니다.
 
